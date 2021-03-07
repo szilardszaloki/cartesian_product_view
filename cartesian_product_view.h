@@ -1,4 +1,5 @@
-#pragma once
+#ifndef CARTESIAN_PRODUCT_VIEW_H
+#define CARTESIAN_PRODUCT_VIEW_H
 
 #include <cassert>
 #include <cstddef>
@@ -170,11 +171,7 @@ class cartesian_product_view final : public std::ranges::view_base {
 
     template <bool propagate_const, std::size_t size, typename ViewsTuple>
     class cartesian_iterator<propagate_const, size, size, ViewsTuple> {
-        template <typename>
-        struct iterator_traits_;
-
-        template <std::size_t... indices>
-        class iterator_traits_<std::index_sequence<indices...>> {
+        class iterator_traits {
             template <std::ranges::range Range>
             class element {
                 using reference = std::ranges::range_reference_t<Range>;
@@ -196,39 +193,41 @@ class cartesian_product_view final : public std::ranges::view_base {
             template <std::ranges::range Range>
             using element_t = typename element<Range>::type;
 
+            template <typename View>
+            using maybe_const = std::conditional_t<std::is_const_v<ViewsTuple>, View const, View>;
+
         public:
-            using iterator_category =
-                std::common_type_t<
+            using iterator_category = std::input_iterator_tag;
+
+            using iterator_concept =
+                std::conditional_t<
+                    (... && std::ranges::bidirectional_range<maybe_const<Views>>),
                     std::bidirectional_iterator_tag,
-                    typename std::iterator_traits<std::ranges::iterator_t<std::tuple_element_t<indices, ViewsTuple>>>::iterator_category...
+                    std::forward_iterator_tag
                 >
             ;
-
-            using iterator_concept = iterator_category;
 
             using difference_type =
                 std::common_type_t<
                     std::intmax_t,
-                    std::ranges::range_difference_t<std::tuple_element_t<indices, ViewsTuple>>...
+                    std::ranges::range_difference_t<maybe_const<Views>>...
                 >
             ;
 
-            using value_type = std::tuple<std::ranges::range_value_t<std::tuple_element_t<indices, ViewsTuple>>...>;
+            using value_type = std::tuple<std::ranges::range_value_t<maybe_const<Views>>...>;
 
-            using reference = std::tuple<element_t<std::tuple_element_t<indices, ViewsTuple>>...>;
+            using reference = std::tuple<element_t<maybe_const<Views>>...>;
 
             using pointer = arrow_proxy<reference>;
         };
 
-        using iterator_traits = iterator_traits_<std::make_index_sequence<std::tuple_size_v<ViewsTuple>>>;
-
     public:
-        using iterator_category = typename iterator_traits::iterator_category;
-        using iterator_concept  = typename iterator_traits::iterator_concept;
-        using difference_type   = typename iterator_traits::difference_type;
-        using value_type        = typename iterator_traits::value_type;
-        using reference         = typename iterator_traits::reference;
-        using pointer           = typename iterator_traits::pointer;
+        using iterator_category = iterator_traits::iterator_category;
+        using iterator_concept  = iterator_traits::iterator_concept;
+        using difference_type   = iterator_traits::difference_type;
+        using value_type        = iterator_traits::value_type;
+        using reference         = iterator_traits::reference;
+        using pointer           = iterator_traits::pointer;
 
         cartesian_iterator() = default;
 
@@ -391,3 +390,5 @@ struct cartesian_product_fn {
 };
 
 inline constexpr cartesian_product_fn<true> cartesian_product{};
+
+#endif
