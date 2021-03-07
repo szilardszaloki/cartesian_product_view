@@ -222,12 +222,12 @@ class cartesian_product_view final : public std::ranges::view_base {
         };
 
     public:
-        using iterator_category = iterator_traits::iterator_category;
-        using iterator_concept  = iterator_traits::iterator_concept;
-        using difference_type   = iterator_traits::difference_type;
-        using value_type        = iterator_traits::value_type;
-        using reference         = iterator_traits::reference;
-        using pointer           = iterator_traits::pointer;
+        using iterator_category = typename iterator_traits::iterator_category;
+        using iterator_concept  = typename iterator_traits::iterator_concept;
+        using difference_type   = typename iterator_traits::difference_type;
+        using value_type        = typename iterator_traits::value_type;
+        using reference         = typename iterator_traits::reference;
+        using pointer           = typename iterator_traits::pointer;
 
         cartesian_iterator() = default;
 
