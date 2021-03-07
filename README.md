@@ -3,6 +3,7 @@
 [![macOS Build Status](https://github.com/szilardszaloki/cartesian_product_view/actions/workflows/macos.yml/badge.svg)](https://github.com/szilardszaloki/cartesian_product_view/actions?query=workflow%3AmacOS)
 [![Linux Build Status](https://github.com/szilardszaloki/cartesian_product_view/actions/workflows/linux.yml/badge.svg)](https://github.com/szilardszaloki/cartesian_product_view/actions?query=workflow%3ALinux)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/szilardszaloki/cartesian_product_view/blob/main/LICENSE)
+[![godbolt](https://img.shields.io/badge/Try%20it%20on-Compiler%20Explorer-brightgreen)](https://godbolt.org/z/n6vjb7)
 
 First of all, check out [range-v3](https://github.com/ericniebler/range-v3), if you haven't already. It's an awesome library that was the basis of a proposal to add [ranges](https://en.cppreference.com/w/cpp/ranges) as an extension of the Standard Template Library with which you can write algorithms in a pure functional, declarative style.  
 range-v3 already has a [`cartesian_product_view<>` implementation](https://github.com/ericniebler/range-v3/blob/master/include/range/v3/view/cartesian_product.hpp). While it does differentiate between shallow-`const` and deep-`const` views and propagate `const` to a certain extent, e.g.:
