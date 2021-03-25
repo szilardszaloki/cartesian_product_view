@@ -44,7 +44,7 @@ Currently, the ceiling for the traversal category that `cartesian_product_view<>
 
 Known to work on the following compilers:
 - GNU C++ 10.1.0 (tested on *Ubuntu 18.04.5 LTS* and *Ubuntu 20.04.2 LTS*)
-- GNU C++ 10.2.0 (tested on *macOS 10.15.7 (19H512)*)
-- MSVC 19.28.29337.0 (tested on *Windows 10 Version 1809 (OS Build 17763.1757)*)
+- GNU C++ 10.2.0 (tested on *macOS 10.15.7 (19H524)*)
+- MSVC 19.28.29912.0 (tested on *Windows 10 Version 1809 (OS Build 17763.1817)*)
 
 but any C++20-conformant compiler should suffice.
