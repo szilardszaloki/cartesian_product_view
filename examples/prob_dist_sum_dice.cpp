@@ -59,21 +59,7 @@ auto prob_dist_sum_dice() {
         }
     );
 
-#ifdef __GNUC__
     return std::pair{ accumulate(distribution | std::views::values), std::move(distribution) };
-#else
-    return std::pair{
-        std::accumulate(
-            distribution.cbegin(),
-            distribution.cend(),
-            std::size_t{},
-            [](std::size_t const acc, auto const& pair) {
-                return acc + pair.second;
-            }
-        ),
-        std::move(distribution)
-    };
-#endif
 }
 
 int main(int const, char const* const []) {

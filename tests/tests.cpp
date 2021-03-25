@@ -425,7 +425,6 @@ TEST(general, simple_use_case) {
     );
 }
 
-#ifdef __GNUC__
 TEST(general, not_common_range) {
     auto twv =
         list // [0, 1, 2, 3]
@@ -467,4 +466,3 @@ TEST(general, not_common_range) {
         }
     );
 }
-#endif
